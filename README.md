@@ -1,4 +1,4 @@
-# LM-belief-change
+# Belief Change in Language Models
 This repository contains the code for paper [Accumulating Context Changes the Beliefs of Language Models](xxx)
 
 
