@@ -233,6 +233,78 @@ survey:
     neutral_statement: "Neutral on removing Confederate and other controversial monuments"
     oppose_statement: "Oppose removing Confederate and other controversial monuments"
 
+  - id: 39  
+    topic_name: "Ban TikTok nationwide"
+    support_statement: "Support banning TikTok nationwide"  
+    neutral_statement: "Neutral on banning TikTok nationwide"
+    oppose_statement: "Oppose banning TikTok nationwide"
+
+  - id: 40  
+    topic_name: "Ban all fossil-based energy by 2030"
+    support_statement: "Support banning all fossil-based energy by 2030"
+    neutral_statement: "Neutral on banning all fossil-based energy by 2030"
+    oppose_statement: "Oppose banning all fossil-based energy by 2030"
+  
+  - id: 41  
+    topic_name: "CEP pay cap"
+    support_statement: "Support implementing a CEO pay cap relative to 20x of the worker's pay"
+    neutral_statement: "Neutral on implementing a CEO pay cap relative to 20x of the worker's pay"
+    oppose_statement: "Oppose implementing a CEO pay cap relative to 20x of the worker's pay"
+  
+  - id: 42
+    topic_name: "Legalize unauthorized border crossing immigrants"
+    support_statement: "Support legalizing all unauthorized border crossing immigrants"
+    neutral_statement: "Neutral on legalizing all unauthorized border crossing immigrants"
+    oppose_statement: "Oppose legalizing all unauthorized border crossing immigrants"
+
+  - id: 43 
+    topic_name: "Freeze residential rents nationwide for two years"
+    support_statement: "Support freezing residential rents nationwide for two years"
+    neutral_statement: "Neutral on freezing residential rents nationwide for two years"
+    oppose_statement: "Oppose freezing residential rents nationwide for two years"
+
+  - id: 44  
+    topic_name: "Decriminalize both unlawful entry and re-entry"
+    support_statement: "Support decriminalizing both unlawful entry and re-entry and legalize all undocumented immigrants"
+    neutral_statement: "Neutral on decriminalizing both unlawful entry and re-entry and legalize all undocumented immigrants"
+    oppose_statement: "Oppose decriminalizing both unlawful entry and re-entry and legalize all undocumented immigrants"
+
+  - id: 45  
+    topic_name: "Cut Pentagon spending by 50% and redirect to climate and social investment"
+    support_statement: "Support cutting Pentagon spending by 50% and redirect to climate and social investment"
+    neutral_statement: "Neutral on cutting Pentagon spending by 50% and redirect to climate and social investment"
+    oppose_statement: "Oppose cutting Pentagon spending by 50% and redirect to climate and social investment"
+
+  - id: 46 
+    topic_name: "Cancel all student debt"
+    support_statement: "Support canceling all existing federal student loan debt"
+    neutral_statement: "Neutral on canceling all existing federal student loan debt"
+    oppose_statement: "Oppose canceling all existing federal student loan debt"
+
+  - id: 47 
+    topic_name: "Ban stock buybacks"
+    support_statement: "Support banning stock buybacks by publicly traded companies"
+    neutral_statement: "Neutral on banning stock buybacks by publicly traded companies"
+    oppose_statement: "Oppose banning stock buybacks by publicly traded companies"
+
+  - id: 48 
+    topic_name: "Compulsory voting"
+    support_statement: "Make voting mandatory with mail-only ballots and fines"
+    neutral_statement: "Neutral on making voting mandatory with mail-only ballots and fines"
+    oppose_statement: "Oppose mandatory voting with mail-only ballots and fines"
+
+  - id: 49 
+    topic_name: "Mandatory gun buyback"
+    support_statement: "Mandatory assault-weapon buyback; federal charges to keep"
+    neutral_statement: "Neutral on mandatory assault-weapon buyback; federal charges to keep"
+    oppose_statement: "Oppose a mandatory assault-weapon buyback and penalties"
+
+  - id: 50 
+    topic_name: "Ban for-profit hospitals"
+    support_statement: "Ban for-profit hospitals/nursing homes"
+    neutral_statement: "Neutral on banning for-profit hospitals/nursing homes"
+    oppose_statement: "Oppose banning for-profit hospitals/nursing homes"
+
 study:
   conservative:
     - id: 0

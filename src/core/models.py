@@ -1,11 +1,37 @@
 import os
 import time
 import random
+from copy import deepcopy
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from openai import OpenAI
 
 
 MAX_TOKENS = 8192
+
+
+def _is_anthropic_model_name(name: str) -> bool:
+    if not name:
+        return False
+    n = str(name).lower()
+    return ("claude" in n) or ("anthropic" in n) or ("sonnet" in n)
+
+def _strip_cache_control_from_messages(messages):
+    if not isinstance(messages, list):
+        return messages
+    msgs = deepcopy(messages)
+    for m in msgs:
+        # drop message-level cache_control if any
+        if isinstance(m, dict):
+            m.pop("cache_control", None)
+            c = m.get("content")
+            # content could be dict or list of dicts depending on adapters
+            if isinstance(c, dict):
+                c.pop("cache_control", None)
+            elif isinstance(c, list):
+                for blk in c:
+                    if isinstance(blk, dict):
+                        blk.pop("cache_control", None)
+    return msgs
 
 
 class Model:
@@ -76,9 +102,12 @@ class Model:
                     
                     return self._extract_output_text_from_responses(resp)
                 else:
+                    send_messages = messages
+                    if _is_anthropic_model_name(self.model_name):
+                        send_messages = _strip_cache_control_from_messages(send_messages)
                     resp = self.client.chat.completions.create(
                         model=self.model_name,
-                        messages=messages,
+                        messages=send_messages,
                         max_tokens=kwargs.get("max_tokens", MAX_TOKENS),
                     )
                     return resp.choices[0].message.content or ""
@@ -258,6 +287,8 @@ class Model:
             return self.client.responses.create(**kwargs)
         else:
             messages = self._apply_cache_control(messages)
+            if _is_anthropic_model_name(self.model_name):
+                messages = _strip_cache_control_from_messages(messages)
             oai_tools = self._to_oai_tools(tools)
             kwargs = {
                 "model": self.model_name,
@@ -289,4 +320,3 @@ class Model:
                 "output": normalized_output,
                 "_raw_chat_completion": resp,
             }
-

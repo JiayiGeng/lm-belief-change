@@ -2,6 +2,7 @@ import re
 import json
 import inspect
 import traceback
+from copy import deepcopy
 
 
 class AgentRuntime:
@@ -98,6 +99,25 @@ class AgentRuntime:
             return func(**args) if args else func()
         return {"ok": False, "error": f"unknown tool {name}"}
 
+    # ---------- Minimal-change helper to avoid Anthropic cache_control limit ----------
+    @staticmethod
+    def _is_anthropic_model(model) -> bool:
+        name = getattr(model, "model_name", None) or getattr(model, "model", None) or ""
+        name = (name or "").lower()
+        return ("claude" in name) or ("sonnet" in name) or ("anthropic" in name)
+
+    @staticmethod
+    def _strip_cache_control_from_messages(messages):
+        msgs = deepcopy(messages)
+        for m in msgs:
+            content = m.get("content")
+            if isinstance(content, list):
+                for blk in content:
+                    if isinstance(blk, dict):
+                        blk.pop("cache_control", None)
+        return msgs
+    # -------------------------------------------------------------------------------
+
     def fc_agentic_loop(self, model, base_messages, agentic_tools, max_steps=8, allow_repeat=False):
         messages = list(base_messages)
         sigs = self.introspect_tool_signatures(self.tool_impl)
@@ -116,8 +136,11 @@ class AgentRuntime:
         is_gpt5_responses = (model_name == "gpt-5")  # Responses API path
 
         for step in range(max_steps):
+            # Minimal change: strip cache_control only for Anthropic models
+            send_messages = self._strip_cache_control_from_messages(messages) if self._is_anthropic_model(model) else messages
+
             resp = model.generate_with_tools(
-                messages=messages,
+                messages=send_messages,
                 tools=agentic_tools,
                 previous_response_id=previous_response_id,
                 max_tokens=self.max_tokens,
@@ -242,7 +265,6 @@ class AgentRuntime:
         }
 
     def json_agentic_loop(self, model, base_messages, tools_schema_json, max_steps=8, allow_repeat=False):
-        from copy import deepcopy
         messages = deepcopy(base_messages)
         sigs = self.introspect_tool_signatures(self.tool_impl)
         seen = set()
@@ -258,7 +280,10 @@ class AgentRuntime:
         previous_response_id = None
 
         for step in range(max_steps):
-            resp = model.generate_with_tools(messages, tools=None, previous_response_id=previous_response_id, max_tokens=self.max_tokens)
+            # Minimal change: strip cache_control only for Anthropic models
+            send_messages = self._strip_cache_control_from_messages(messages) if self._is_anthropic_model(model) else messages
+
+            resp = model.generate_with_tools(send_messages, tools=None, previous_response_id=previous_response_id, max_tokens=self.max_tokens)
             if isinstance(resp, dict):
                 previous_response_id = resp.get("id")
                 out = resp.get("output", []) or []

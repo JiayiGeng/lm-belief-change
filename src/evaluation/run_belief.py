@@ -97,8 +97,24 @@ def main(exp_name, **kwargs):
         
         if stage2_run_dir != 'none':
             rounds_num = kwargs.get('rounds_num', 10)
-            with open(Path(stage2_run_dir) / 'multiturn_beta.jsonl', 'r') as f:
-                history_conversations = [json.loads(line) for line in f]
+            mode = kwargs.get('mode', 'two-sided')
+            if mode == "two-sided":
+                if model_name == "azure/gpt-oss-120b":
+                    with open(Path(stage2_run_dir) / 'multiturn_alpha.jsonl', 'r') as f:
+                        history_conversations = [json.loads(line) for line in f]
+                    print(f"Mode: {mode}. Loaded history conversations from {Path(stage2_run_dir) / 'multiturn_alpha.jsonl'}")
+                elif model_name == "azure/DeepSeek-V3.1":
+                    with open(Path(stage2_run_dir) / 'multiturn_beta.jsonl', 'r') as f:
+                        history_conversations = [json.loads(line) for line in f]
+                    print(f"Mode: {mode}. Loaded history conversations from {Path(stage2_run_dir) / 'multiturn_beta.jsonl'}")
+                else:
+                    raise ValueError(f"Invalid model name: {model_name}")
+            elif mode == "one-sided":
+                with open(Path(stage2_run_dir) / 'multiturn_beta.jsonl', 'r') as f:
+                    history_conversations = [json.loads(line) for line in f]
+                print(f"Mode: {mode}. Loaded history conversations from {Path(stage2_run_dir) / 'multiturn_beta.jsonl'}")
+            else:
+                raise ValueError(f"Invalid mode: {mode}")
             
             history_conversation = history_conversations[query_index]
             conversations = history_conversation['conversations']
