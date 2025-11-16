@@ -56,9 +56,19 @@ export LLM_BASE_URL="Your BASE URL"
 cd src/research/open_deep_research
 ```
 
+## Question and Issue
+Please contact Jiayi Geng at ogeng@andrew.cmu.edu for any questions or issues.
+
 
 ## Citation
 ```bibtex
+@article{geng2025accumulating,
+  title={Accumulating Context Changes the Beliefs of Language Models},
+  author={Geng, Jiayi and Chen, Howard and Liu, Ryan and Ribeiro, Manoel Horta and Willer, Robb and Neubig, Graham and Griffiths, Thomas L},
+  journal={arXiv preprint arXiv:2511.01805},
+  year={2025}
+}
 ```
 
 ## Acknowledgements
+This paper was supported by grants from Fujitsu, the Microsoft AFMR, and the NOMIS Foundation. We also thank Izzy Benjamin Gainsburg, Amanda Bertsch, Lindia Tjuatja, Lintang Sutawika, Yueqi Song, and Emily Xiao for their valuable feedback and discussion.
